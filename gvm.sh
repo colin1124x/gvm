@@ -1,6 +1,7 @@
 #!/bin/bash
 
 GVM_DIR=${GVM_DIR:-$HOME/gvm}
+GVM_CURRENT_VFILE=$GVM_DIR/version
 
 has_go() {
     test -d "$1" > /dev/null 2>&1
@@ -15,21 +16,42 @@ list_go_version() {
 
 load_go() {
     
-    local dir=$GVM_DIR/sources/$1
+    local v=${1:?'must give a specific version'}
+    local dir=$GVM_DIR/sources/$v
 
     if has_go "$dir"; then
         echo $1 already exists!
         return 0
     else
         mkdir -p $dir
-        wget -qO - https://storage.googleapis.com/golang/go${1}.linux-amd64.tar.gz | tar -xvz -C $dir 
+        wget -qO - https://storage.googleapis.com/golang/go$v.linux-amd64.tar.gz | tar -xvz -C $dir 
     fi
 }
 
+remove_go() {
+    
+    local v=${1:?'must give a specific version'}
+    local dir=$GVM_DIR/sources/$v
+
+    if [ $v = `cat $GVM_CURRENT_VFILE` ]; then
+        echo can\'t remove current golang version!!
+        return 1
+    fi
+
+    if has_go "$dir"; then
+        rm $dir -r
+        return $?
+    fi
+} 
+
 use_go() {
-    local dir=$GVM_DIR/sources/$1
+    
+    local v=${1:?'must give a specific version'}
+    local dir=$GVM_DIR/sources/$v
+
     if has_go $dir; then
-        ln -sf $dir/go $GOROOT
+        echo $v > $GVM_CURRENT_VFILE
+        ln -sf $dir/go ${GOROOT%/*}
         env_go
         return $?
     else
@@ -39,13 +61,15 @@ use_go() {
 }
 
 env_go() {
-    echo -e "\033[32m"GVM_DIR=$GVM_DIR"\033[m"
+    echo -e "\033[32m"GVM_DIR=$GVM_DIR, v=`cat $GVM_CURRENT_VFILE`"\033[m"
+    go version
     go env
 }
 
 case $1 in
 list) list_go_version;;
 install) load_go "$2";;
+uninstall) remove_go "$2";;
 use) use_go "$2";;
 env) env_go;;
 *) echo Usage: ${0} [SUB-COMMAND] [ARGS];;
