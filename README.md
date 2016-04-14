@@ -40,6 +40,12 @@ you can change go version by using
 ```sh
 gvm use 1.5.2
 ```
+![command use](./resource/use.png)
+
+```sh
+gvm list
+```
+![command list](./resource/list.png)
 
 ### Notice
 
