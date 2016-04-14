@@ -9,8 +9,17 @@ has_go() {
 }
 
 list_go_version() {
+
+    local cv=`cat $GVM_CURRENT_VFILE`
+
     for v in `ls $GVM_DIR/sources`; do
-        echo $v
+        if [ $v = $cv ]; then
+            fmt='\033[32m-> %9s\033[m'
+        else
+            fmt='%12s'
+        fi
+        
+        printf "$fmt\n" $v
     done
 }
 
