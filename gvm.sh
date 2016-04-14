@@ -81,7 +81,19 @@ install) load_go "$2";;
 uninstall) remove_go "$2";;
 use) use_go "$2";;
 env) env_go;;
-*) echo Usage: ${0} [SUB-COMMAND] [ARGS];;
+help)
+    fmt='  %15s %-20s \033[35m%s\033[m'
+    echo Usage:
+    printf "$fmt\n" list '' '#list local versions'
+    printf "$fmt\n" install '[VERSION]' '#install specific golang version'
+    printf "$fmt\n" uninstall '[VERSION]' '#uninstall specific golang version'
+    printf "$fmt\n" use '[VERSION]' '#use specific golang version'
+    printf "$fmt\n" env '' '#display golang environment'
+    ;;
+*) 
+    echo Usage: gvm [SUB-COMMAND] [ARGS]
+    $0 help 
+    ;;
 esac
 
 #if type "$1" >> /dev/null ; then
