@@ -13,6 +13,7 @@ download gvm and put it in your home dir
 write to .bashrc
 
 ```
+export GOPATH=$HOME/gocode
 . $HOME/gvm/gvmrc
 ```
 
