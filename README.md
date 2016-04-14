@@ -17,6 +17,8 @@ export GOPATH=$HOME/gocode
 . $HOME/gvm/gvmrc
 ```
 
+then run `. ~/.bashrc`
+
 #### step 3
 
 link gvm/gvm.sh to /usr/local/bin dir
