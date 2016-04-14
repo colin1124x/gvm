@@ -1,3 +1,4 @@
 go
-/sources/
+/sources/*
+!/sources/.gitkeep
 [v]ersion
