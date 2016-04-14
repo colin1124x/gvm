@@ -51,4 +51,4 @@ gvm list
 
 ### Notice
 
-you must remove the old go install and env setting
+before use `gvm`, you must remove the old golang installation and env setting
