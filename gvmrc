@@ -1,8 +1,10 @@
 
 # execute in bashrc
 
+export GO15VENDOREXPERIMENT=1
 export GVM_DIR=$HOME/gvm
 export GOPATH=${GOPATH:-$HOME/go}
 export GOROOT=$GVM_DIR/go
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
-export GO15VENDOREXPERIMENT=1
+PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+
+export PATH

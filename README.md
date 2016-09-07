@@ -14,7 +14,10 @@ write to .bashrc
 
 ```
 export GOPATH=$HOME/gocode
-. $HOME/gvm/gvmrc
+if [ -f $HOME/gvm/gvmrc ]; then
+    . $HOME/gvm/gvmrc
+fi
+
 ```
 
 then run `. ~/.bashrc`
