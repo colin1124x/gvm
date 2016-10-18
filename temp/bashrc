@@ -1,0 +1,7 @@
+
+### gvm start
+export GOPATH=${GOPATH:=$HOME/gocode}
+if [ -f "$HOME/gvm/gvmrc" ]; then
+	. "$HOME/gvm/gvmrc"
+fi
+### gvm end
