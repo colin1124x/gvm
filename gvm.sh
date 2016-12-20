@@ -53,6 +53,13 @@ remove_go() {
     fi
 } 
 
+clean_go() {
+    local v=`cat $GVM_CURRENT_VFILE`
+    cd $GVM_DIR/sources && \
+    rm -r `ls | grep -v "$v"` && \
+    cd -
+}
+
 use_go() {
     
     local v=${1:?'must give a specific version'}
@@ -79,6 +86,7 @@ case $1 in
 list) list_go_version;;
 install) load_go "$2";;
 uninstall) remove_go "$2";;
+clean) clean_go;;
 use) use_go "$2";;
 env) env_go;;
 help)
@@ -87,6 +95,7 @@ help)
     printf "$fmt\n" list '' '#list local versions'
     printf "$fmt\n" install '[VERSION]' '#install specific golang version'
     printf "$fmt\n" uninstall '[VERSION]' '#uninstall specific golang version'
+    printf "$fmt\n" clean '' '#clean all go version but current'
     printf "$fmt\n" use '[VERSION]' '#use specific golang version'
     printf "$fmt\n" env '' '#display golang environment'
     ;;
