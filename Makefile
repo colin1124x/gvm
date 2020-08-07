@@ -5,7 +5,7 @@ GOPATH ?= ${HOME}/go
 GOROOT = $(GVM_DIR)/go
 
 .PHONY: gvmrc
-gvmrc:
+gvmrc: check-darwin
 	if [ "$(GVMRC)" != '/dev/stdout' ] && [ -f "$(GVMRC)" ];then \
 		mv $(GVMRC) $(GVMRC).bak;\
 	fi
@@ -15,11 +15,16 @@ gvmrc:
 	@echo export GOPATH=$(GOPATH) >> $(GVMRC)
 	@echo export GOROOT=$(GOROOT) >> $(GVMRC)
 
-install: gvmrc
+.PHONY: install
+install: check-darwin gvmrc
 	mkdir -p $(GOPATH)/{src,bin,pkg}
 	sudo ln -sf ${PWD}/gvm.sh /usr/local/bin/gvm
 
-uninstall:
-	rm /usr/local/bin/gvm
+.PHONY: uninstall
+uninstall: check-darwin
+	rm -i /usr/local/bin/gvm
+	[ "$(GVMRC)" != '/dev/stdout' ] && [ -n "$(GVMRC)" ] && rm -i $(GVMRC)
 
-
+.PHONY: check-darwin
+check-darwin:
+	[ "`uname -s`" == 'Darwin' ] && exit 1
