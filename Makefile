@@ -3,6 +3,7 @@ GVM_DIR ?= ${HOME}/.gvm
 GVMRC ?= /dev/stdout
 GOPATH ?= ${HOME}/go
 GOROOT = $(GVM_DIR)/go
+OS = $(shell uname -s)
 
 .PHONY: gvmrc
 gvmrc: check-darwin
@@ -18,13 +19,15 @@ gvmrc: check-darwin
 .PHONY: install
 install: check-darwin gvmrc
 	mkdir -p $(GOPATH)/{src,bin,pkg}
+	mkdir -p $(GVM_DIR)
 	sudo ln -sf ${PWD}/gvm.sh /usr/local/bin/gvm
 
 .PHONY: uninstall
 uninstall: check-darwin
-	rm -i /usr/local/bin/gvm
-	[ "$(GVMRC)" != '/dev/stdout' ] && [ -n "$(GVMRC)" ] && rm -i $(GVMRC)
+	rm -if /usr/local/bin/gvm
+	-[ "$(GVMRC)" != '/dev/stdout' ] && [ -n "$(GVMRC)" ] && rm -rf $(GVMRC)
+	-rm -r $(GVM_DIR)
 
 .PHONY: check-darwin
 check-darwin:
-	[ "`uname -s`" == 'Darwin' ] && exit 1
+

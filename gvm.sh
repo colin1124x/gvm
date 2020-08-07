@@ -8,12 +8,19 @@ has_go() {
     return $?
 }
 
+current_go() {
+    if [ -r "$GVM_CURRENT_VFILE" ]
+    then
+        cat $GVM_CURRENT_VFILE
+    fi
+}
+
 list_go_version() {
 
-    local cv=`cat $GVM_CURRENT_VFILE`
+    local cv=$(current_go)
 
     for v in `ls $GVM_DIR/sources`; do
-        if [ $v = $cv ]; then
+        if [ "x$v" = "x$cv" ]; then
             fmt='\033[32m-> %9s\033[m'
         else
             fmt='%12s'
@@ -35,6 +42,8 @@ load_go() {
         mkdir -p $dir
         wget -qO - https://storage.googleapis.com/golang/go$v.linux-amd64.tar.gz | tar -xvz -C $dir 
     fi
+
+    [ -z "$(current_go)" ] && use_go $v
 }
 
 remove_go() {
