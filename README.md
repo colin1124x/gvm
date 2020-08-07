@@ -10,30 +10,32 @@ download gvm and put it in your home dir
 
 #### step 2
 
-write to .bashrc
+create gvmrc
+```
+mkdir ~/.gvm
+make gvmrc GVMRC=~/.gvm/gcmrc
+```
 
+write to .bashrc
 ```
 export GOPATH=$HOME/gocode
-if [ -f $HOME/gvm/gvmrc ]; then
-    . $HOME/gvm/gvmrc
+if [ -r $HOME/.gvm/gvmrc ]; then
+    . $HOME/.gvm/gvmrc
 fi
 
 ```
-
-then run `. ~/.bashrc`
 
 #### step 3
 
 link gvm/gvm.sh to /usr/local/bin dir
 
 ```sh
-ln -s $HOME/gvm/gvm.sh /usr/local/bin/gvm
+make install
 ```
 
 #### step 4
 
 install go
-
 ```sh
 gvm install 1.6.1
 gvm install 1.5.2
