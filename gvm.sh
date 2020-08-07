@@ -1,6 +1,6 @@
 #!/bin/bash
 
-GVM_DIR=${GVM_DIR:-$HOME/gvm}
+GVM_DIR=${GVM_DIR:-$HOME/.gvm}
 GVM_CURRENT_VFILE=$GVM_DIR/version
 
 has_go() {
