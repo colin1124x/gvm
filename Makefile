@@ -7,7 +7,7 @@ OS = $(shell uname -s)
 
 .PHONY: gvmrc
 gvmrc: check-darwin
-	if [ "$(GVMRC)" != '/dev/stdout' ] && [ -f "$(GVMRC)" ];then \
+	@if [ "$(GVMRC)" != '/dev/stdout' ] && [ -f "$(GVMRC)" ];then \
 		mv $(GVMRC) $(GVMRC).bak;\
 	fi
 	@echo '### this is gvmrc file' >> $(GVMRC)
@@ -15,6 +15,7 @@ gvmrc: check-darwin
 	@echo export GVM_DIR=$(GVM_DIR) >> $(GVMRC)
 	@echo export GOPATH=$(GOPATH) >> $(GVMRC)
 	@echo export GOROOT=$(GOROOT) >> $(GVMRC)
+	@echo PATH='$${PATH}:$${GOROOT}/bin' >> $(GVMRC)
 
 .PHONY: install
 install: check-darwin gvmrc
