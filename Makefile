@@ -14,7 +14,6 @@ gvmrc:
 	@echo export GVM_DIR=$(GVM_DIR) >> $(GVMRC)
 	@echo export GOPATH=$(GOPATH) >> $(GVMRC)
 	@echo export GOROOT=$(GOROOT) >> $(GVMRC)
-	@echo export PATH='$${PATH}:$${GOROOT}/bin:$${GOPATH}/bin' >> $(GVMRC)
 
 install: gvmrc
 	mkdir -p $(GOPATH)/{src,bin,pkg}
