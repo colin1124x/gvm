@@ -32,4 +32,4 @@ uninstall: check-darwin
 
 .PHONY: check-darwin
 check-darwin:
-
+	@if [ "$(shell uname -s)" == "Darwin" ];then echo not support mac; exit 1; fi
