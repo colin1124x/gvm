@@ -21,6 +21,7 @@ gvmrc: check-darwin
 install: check-darwin gvmrc
 	mkdir -p $(GOPATH)/{src,bin,pkg}
 	mkdir -p $(GVM_DIR)
+	mkdir -p /usr/local/bin
 	sudo ln -sf ${PWD}/gvm.sh /usr/local/bin/gvm
 
 .PHONY: uninstall
